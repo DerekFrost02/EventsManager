@@ -1,0 +1,10 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: EventsManager
+  datasource:
+    url: jdbc:mysql://localhost:3311/events_manager
+    username: root
+    password: pluto
+    driver-class-name: com.mysql.cj.jdbc.Driver
