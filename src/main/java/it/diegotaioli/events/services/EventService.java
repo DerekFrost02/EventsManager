@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import it.diegotaioli.events.dto.ResponseEventDto;
 import it.diegotaioli.events.exceptions.ResourceNotFoundException;
+import it.diegotaioli.events.mappers.EventMapper;
 import it.diegotaioli.events.models.Event;
 import it.diegotaioli.events.repositories.EventRepository;
 
@@ -19,9 +21,12 @@ public class EventService {
 		this.eventRepository = eventRepository;
 	}
 	
-	public List<Event> getAll()
+	public List<ResponseEventDto> getAll()
 	{
-		return this.eventRepository.findAll();
+		return this.eventRepository.findAll()
+				.stream()
+				.map(EventMapper::toDto)
+				.toList();
 	}
 	
 	public Event getById(Long id) throws ResourceNotFoundException
