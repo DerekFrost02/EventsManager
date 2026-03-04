@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.diegotaioli.events.exceptions.ResourceNotFoundException;
 import it.diegotaioli.events.models.Location;
 import it.diegotaioli.events.services.LocationService;
 
@@ -27,10 +28,10 @@ private LocationService locationService;
 	}
 	
 	@GetMapping("api/locations/{id}")
-	public ResponseEntity<List<Location>> indexByID(@PathVariable String id)
+	public ResponseEntity<Location> indexByID(@PathVariable String id) throws ResourceNotFoundException
 	{
 		Long chiave = Long.parseLong(id);
-		List<Location> locations = this.locationService.getById(chiave);
+		Location locations = this.locationService.getById(chiave);
 		return ResponseEntity.ok(locations);
 	}
 

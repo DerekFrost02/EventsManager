@@ -1,6 +1,9 @@
 package it.diegotaioli.events.services;
 
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import it.diegotaioli.events.exceptions.ResourceNotFoundException;
@@ -25,9 +28,25 @@ public class EventService {
 	{
 		Event event = this.eventRepository.findById(id)
 				.orElseThrow(
-					() ->new ResourceNotFoundException("Evento con id " + id + " non trovato")
+					() ->new ResourceNotFoundException("Evento con id = " + id + " non trovato")
 		);
 		return event;
+	}
+	
+	public Event insertEvent(Event requestEvent) {
+		Event eventInserted = this.eventRepository.save(requestEvent);
+		return eventInserted;
+	}
+	
+	public Event updateEvent(Long id, Event requestEvent) {
+		requestEvent.setId(id);
+		Event eventUpdated = this.eventRepository.save(requestEvent);
+		return eventUpdated;
+	}
+	
+	public ResponseEntity<?> deleteEventById(Long id) {
+		this.eventRepository.deleteById(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 
 }

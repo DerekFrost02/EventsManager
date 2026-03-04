@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import it.diegotaioli.events.exceptions.ResourceNotFoundException;
 import it.diegotaioli.events.models.Location;
 import it.diegotaioli.events.repositories.LocationRepository;
 
@@ -21,9 +22,18 @@ public class LocationService {
 		return this.locationRepository.findAll();
 	}
 	
-	public List<Location> getById(Long id)
+	public Location getById(Long id) throws ResourceNotFoundException
 	{
-		return this.locationRepository.findById(id);
+		Location local = this.locationRepository.findById(id)
+				.orElseThrow(
+					() ->new ResourceNotFoundException("localita con id = " + id + " non trovato")
+				);
+		return local;
+	}
+	
+	public Location insertLocation(Location requestLocation) {
+		Location locationInserted = this.locationRepository.save(requestLocation);
+		return locationInserted;
 	}
 
 }

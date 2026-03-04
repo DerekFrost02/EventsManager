@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.diegotaioli.events.exceptions.ResourceNotFoundException;
 import it.diegotaioli.events.models.Member;
 import it.diegotaioli.events.services.MemberService;
 
@@ -23,6 +25,14 @@ public class MemberController {
 	{
 		List<Member> membrs = this.membrService.getAll();
 		return ResponseEntity.ok(membrs);
+	}
+	
+	@GetMapping("api/members/{id}")
+	public ResponseEntity<Member> indexById(@PathVariable String id) throws ResourceNotFoundException
+	{
+		Long chiave = Long.parseLong(id);
+		Member membr = this.membrService.getById(chiave);
+		return ResponseEntity.ok(membr);
 	}
 
 

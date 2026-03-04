@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import it.diegotaioli.events.exceptions.ResourceNotFoundException;
 import it.diegotaioli.events.models.Member;
 import it.diegotaioli.events.repositories.MemberRepository;
 
@@ -19,6 +20,15 @@ public class MemberService {
 	public List<Member> getAll()
 	{
 		return this.membrRepository.findAll();
+	}
+	
+	public Member getById(Long id) throws ResourceNotFoundException
+	{
+		Member membr = this.membrRepository.findById(id)
+				.orElseThrow(
+					() ->new ResourceNotFoundException("Evento con id " + id + " non trovato")
+		);
+		return membr;
 	}
 
 }
