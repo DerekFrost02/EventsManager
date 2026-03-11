@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.diegotaioli.events.dto.ResponseEventDto;
 import it.diegotaioli.events.exceptions.BadRequestException;
 import it.diegotaioli.events.exceptions.ResourceNotFoundException;
 import it.diegotaioli.events.models.Event;
@@ -32,9 +33,9 @@ public class EventController {
 	}
 	
 	@GetMapping("api/events")
-	public ResponseEntity<List<Event>> index()
+	public ResponseEntity<List<ResponseEventDto>> index()
 	{
-		List<Event> events = this.eventService.getAll();
+		List<ResponseEventDto> events = this.eventService.getAll();
 		return ResponseEntity.ok(events);
 	}
 	
