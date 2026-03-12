@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.diegotaioli.events.dto.ResponseMemberDto;
 import it.diegotaioli.events.exceptions.ResourceNotFoundException;
-import it.diegotaioli.events.models.Member;
 import it.diegotaioli.events.services.MemberService;
 
 @RestController
@@ -21,17 +21,17 @@ public class MemberController {
 	}
 	
 	@GetMapping("api/members")
-	public ResponseEntity<List<Member>> index()
+	public ResponseEntity<List<ResponseMemberDto>> index()
 	{
-		List<Member> membrs = this.membrService.getAll();
+		List<ResponseMemberDto> membrs = this.membrService.getAll();
 		return ResponseEntity.ok(membrs);
 	}
 	
 	@GetMapping("api/members/{id}")
-	public ResponseEntity<Member> indexById(@PathVariable String id) throws ResourceNotFoundException
+	public ResponseEntity<ResponseMemberDto> indexById(@PathVariable String id) throws ResourceNotFoundException
 	{
 		Long chiave = Long.parseLong(id);
-		Member membr = this.membrService.getById(chiave);
+		ResponseMemberDto membr = this.membrService.getById(chiave);
 		return ResponseEntity.ok(membr);
 	}
 

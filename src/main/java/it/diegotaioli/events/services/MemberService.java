@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import it.diegotaioli.events.dto.ResponseMemberDto;
 import it.diegotaioli.events.exceptions.ResourceNotFoundException;
+import it.diegotaioli.events.mappers.MemberMapper;
 import it.diegotaioli.events.models.Member;
 import it.diegotaioli.events.repositories.MemberRepository;
 
@@ -17,14 +19,17 @@ public class MemberService {
 		this.membrRepository = membrRepository;
 	}
 	
-	public List<Member> getAll()
+	public List<ResponseMemberDto> getAll()
 	{
-		return this.membrRepository.findAll();
+		return this.membrRepository.findAll()
+				.stream()
+				.map(MemberMapper::toDto)
+				.toList();
 	}
 	
-	public Member getById(Long id) throws ResourceNotFoundException
+	public ResponseMemberDto getById(Long id) throws ResourceNotFoundException
 	{
-		Member membr = this.membrRepository.findById(id)
+		ResponseMemberDto membr = this.membrRepository.findById(id).map(MemberMapper::toDto)
 				.orElseThrow(
 					() ->new ResourceNotFoundException("Evento con id " + id + " non trovato")
 		);

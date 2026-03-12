@@ -29,9 +29,9 @@ public class EventService {
 				.toList();
 	}
 	
-	public Event getById(Long id) throws ResourceNotFoundException
+	public ResponseEventDto getById(Long id) throws ResourceNotFoundException
 	{
-		Event event = this.eventRepository.findById(id)
+		ResponseEventDto event = this.eventRepository.findById(id).map(EventMapper::toDto)
 				.orElseThrow(
 					() ->new ResourceNotFoundException("Evento con id = " + id + " non trovato")
 		);

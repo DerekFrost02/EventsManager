@@ -1,8 +1,9 @@
 package it.diegotaioli.events.dto;
 
-import java.time.LocalDateTime;
 
-import it.diegotaioli.events.models.Place;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,9 @@ public class ResponseEventDto
 	private Long id;
 	private String name;
 	private String place;
+	private String description;
+	private LocalDateTime date;
 	private Integer guests;
-	//private LocalDateTime createdAt; 
+	private List<ResponseMemberDto> members;
 
 }

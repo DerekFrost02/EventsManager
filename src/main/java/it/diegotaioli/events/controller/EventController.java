@@ -40,10 +40,10 @@ public class EventController {
 	}
 	
 	@GetMapping("api/events/{id}")
-	public ResponseEntity<Event> indexById(@PathVariable String id) throws ResourceNotFoundException
+	public ResponseEntity<ResponseEventDto> indexById(@PathVariable String id) throws ResourceNotFoundException
 	{
 		Long chiave = Long.parseLong(id);
-		Event event = this.eventService.getById(chiave);
+		ResponseEventDto event = this.eventService.getById(chiave);
 		return ResponseEntity.ok(event);
 	}
 	

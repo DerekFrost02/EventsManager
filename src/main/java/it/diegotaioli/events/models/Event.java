@@ -1,6 +1,7 @@
 package it.diegotaioli.events.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -12,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
@@ -49,6 +52,14 @@ public class Event {
 	
 	@NotNull(message = "guests required")
 	private int guests;
+	
+	@ManyToMany
+	@JoinTable(
+			name = "event_member",
+			joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "member_id")
+	)
+	private List<Member> members;
 	
 	@Column(name = "created_at", insertable = false, updatable = false)
 	private LocalDateTime createdAt;
